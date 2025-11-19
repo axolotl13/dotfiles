@@ -1,0 +1,6 @@
+# Set the layout for the current tab
+# layout tall
+new_os_window
+
+cd ~/.config/fish
+launch --title "Fish" /usr/bin/nvim

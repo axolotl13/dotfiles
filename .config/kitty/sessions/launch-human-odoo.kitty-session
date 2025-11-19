@@ -1,0 +1,5 @@
+# Set the layout for the current tab
+layout tall
+# Set the working directory for windows in the current tab
+cd ~/Odoo/human
+launch --title "Odoo Human" /usr/bin/nvim
