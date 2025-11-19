@@ -1,0 +1,10 @@
+.cache/
+.cargo/
+.dotfiles/
+.go/
+.java/
+.npm/
+.rustup/
+.var/
+.virtualenvs/
+.snapshots/
