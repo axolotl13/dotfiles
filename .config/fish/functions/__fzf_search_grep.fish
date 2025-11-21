@@ -3,7 +3,7 @@ function __fzf_search_grep --description "Search with ripgrep"
 
   set -l TEMP (mktemp -u)
 
-  set -l RG_PREFIX rg --column --line-number --no-heading --color=always --smart-case
+  set -l RG_PREFIX rg --column --line-number --no-heading --color=always --smart-case --hidden
   set -l FZF_PREVIEW "bat --color=always --theme=\"$BAT_THEME\" {1} --highlight-line {2}"
 
   set -l FZF_OPTS --style minimal --height 60% --layout=reverse \
@@ -15,7 +15,7 @@ function __fzf_search_grep --description "Search with ripgrep"
     --preview-window "up,60%,border-bottom,+{2}+3/3,~3" \
     --bind "ctrl-d:preview-down" \
     --bind "ctrl-u:preview-up" \
-  --with-shell "bash -c" \
+    --with-shell "bash -c" \
     --bind "start,change:transform:
         rg_pat={q:1}
         fzf_pat={q:2..}
