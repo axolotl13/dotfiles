@@ -5,6 +5,7 @@ type -q bat; and alias cat="bat -pp"
 type -q git; and alias dot='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 type -q zoxide; and alias cd="z"
 type -q nvim; and alias vim="nvim --noplugin"
+type -q podman; and alias docker="podman"
 
 if type -q kitty; or test -e $HOME/.local/share/kitty-ssh-kitten
   alias kxd="kitten diff"
