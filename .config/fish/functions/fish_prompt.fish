@@ -31,13 +31,16 @@ function fish_prompt
   set -q __fish_git_prompt_color_stagedstate
   or set -g __fish_git_prompt_color_stagedstate green
   set -q __fish_git_prompt_char_stagedstate
-  or set -g __fish_git_prompt_char_stagedstate '● '
+  or set -g __fish_git_prompt_char_stagedstate ' ●'
   set -q __fish_git_prompt_color_dirtystate
   or set -g __fish_git_prompt_color_dirtystate yellow
   set -q __fish_git_prompt_char_dirtystate
-  or set -g __fish_git_prompt_char_dirtystate '✘'
+  or set -g __fish_git_prompt_char_dirtystate ' ✘'
   set -q __fish_git_prompt_color_branch
   or set -g __fish_git_prompt_color_branch red
+  set -q __fish_git_prompt_char_stateseparator
+  or set -g __fish_git_prompt_char_stateseparator ''
+
 
   set -l gitter $(fish_git_prompt $blue'  git:%s')
 
