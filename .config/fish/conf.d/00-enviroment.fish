@@ -23,9 +23,9 @@ if type -q bat
   # set -x MANPAGER "sh -c 'col -bx | bat --paging=always -l man --plain'"
 
   ## abbreviation
-  # BUG: -h
-  abbr -a --position anywhere -- -h "-h | bat -pplhelp"
-  abbr -a --position anywhere -- --help "--help | bat -pplhelp"
+  # WARNING: This modifies ALL -h and --help declarations.
+  # abbr -a --position anywhere -- -h "-h | bat -pplhelp"
+  # abbr -a --position anywhere -- --help "--help | bat -pplhelp"
 end
 
 # sudo
