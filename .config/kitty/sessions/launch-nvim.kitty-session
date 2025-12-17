@@ -1,5 +1,0 @@
-# Set the layout for the current tab
-layout tall
-
-cd ~/.config/nvim
-launch --title "Nvim" /usr/bin/nvim

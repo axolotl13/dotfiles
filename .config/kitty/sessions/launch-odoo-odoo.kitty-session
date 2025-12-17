@@ -1,5 +1,0 @@
-# Set the layout for the current tab
-layout tall
-# Set the working directory for windows in the current tab
-cd ~/Odoo/odoo
-launch --title "Odoo" /usr/bin/nvim
