@@ -12,11 +12,6 @@ if status --is-interactive
   end
   set -g fish_key_bindings fish_hybrid_key_bindings
 
-  # bind enter accept-autosuggestion execute
-  # bind --mode insert ctrl-enter accept-autosuggestion execute
-  # bind --mode insert ctrl-space suppress-autosuggestion
-  # bind ctrl-g 'if [ "$fish_autosuggestion_enabled" = 0 ]; set -g fish_autosuggestion_enabled 1; else; set -g fish_autosuggestion_enabled 0; end'
-  # bind --mode insert \t complete
   function __toggle_private_mode
     if set -q fish_private_mode
       exit
@@ -29,13 +24,6 @@ if status --is-interactive
   bind --mode insert ctrl-delete '__toggle_private_mode'
   bind ctrl-delete '__toggle_private_mode'
 
-  # bind --mode insert enter '
-  #   if commandline -f accept-autosuggestion
-  #     commandline -f accept-autosuggestion execute
-  #   else
-  #     commandline -f execute
-  #   end
-  # '
   bind --mode insert ctrl-e 'suppress-autosuggestion'
 
   set fish_cursor_default block blink

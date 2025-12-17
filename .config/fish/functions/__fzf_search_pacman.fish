@@ -4,17 +4,24 @@ function __fzf_search_pacman -d 'Search pacman packages'
   and type -q kitty;
   or return 1
 
-  set -l PACMAN_PKG pacman -Slq
+  set PACMAN_PKG pacman -Slq
 
-  set -l FZF_PREVIEW "pacman -Si {1}"
-  type -q paru; and set FZF_PREVIEW "paru -Si {1}"
+  set FZF_PREVIEW "pacman -Si {1}"
 
-  set -l FZF_OPTS --style minimal --height 50% --layout=reverse \
+  type -q yay;
+  and set FZF_PREVIEW "yay -Si {1}"
+
+  set FZF_OPTS \
+    --style minimal \
+    --height 50% \
+    --layout reverse \
+    --multi \
+    --ansi \
     --marker "▏" \
     --pointer "█" \
-    --multi --ansi \
     --with-shell "bash -c" \
     --preview-window "right,65%,<55(down,50%,border-top)" \
+    --bind "ctrl-q:change-preview-window(down|up|hidden)" \
     --bind "ctrl-d:preview-down" \
     --bind "ctrl-u:preview-up" \
     --bind "?:preview:echo 'Keybindings:
@@ -22,27 +29,28 @@ function __fzf_search_pacman -d 'Search pacman packages'
 󰌑 enter       install package
 󰇚 ctrl+t      download package
  ctrl+/      installed package
- ctrl+p      paru package / pacman package
+󰁡 ctrl+x      update system
+ ctrl+p      yay package / pacman package
  ctrl+e      information package
 󱂩 ctrl+d      page-down
 󱔓 ctrl+u      page-up
 󰆴 del         delete package
 󰋖 help        help
     '" \
-    --bind "enter:execute(kitty sh -c 'pkexec pacman -S {+}')+cancel+cancel" \
-    --bind "del:execute(kitty sh -c 'pkexec pacman -Rsn {+}')+cancel+cancel" \
+    --bind "ctrl-x:execute(kitty sh -c 'pkexec pacman -Syu')+abort" \
+    --bind "enter:execute(kitty sh -c 'pkexec pacman -S {+}')+abort" \
+    --bind "del:execute(kitty sh -c 'pkexec pacman -Rsn {+}')+abort" \
     --bind "ctrl-t:execute(kitty sh -c 'pkexec pacman -Sw {+}')" \
     --bind "ctrl-e:execute(pacman -Qil {+} | less)" \
-    --bind "ctrl-q:change-preview-window(down|up|hidden)" \
     --bind "ctrl-/:transform:[[ ! \$FZF_PROMPT =~ \"installed\" ]] &&
       echo \"change-prompt( Package(installed)> )+reload(pacman -Qsq)\" ||
       echo \"change-prompt( Package(pacman)> )+reload($PACMAN_PKG)\" " \
-    --bind "ctrl-p:transform:[[ ! \$FZF_PROMPT =~ \"paru\" ]] &&
-      echo \"change-prompt( Package(paru)> )+reload(paru -Slq)\" ||
+    --bind "ctrl-p:transform:[[ ! \$FZF_PROMPT =~ \"yay\" ]] &&
+      echo \"change-prompt( Package(yay)> )+reload(yay -Slq)\" ||
       echo \"change-prompt( Package(pacman)> )+reload($PACMAN_PKG)\" " \
-    --footer "[󰌑] install [c+q] 󱂪 position [del] 󰆴 delete [󰋖] help"
+    --footer "[󰌑] install [c+q] 󱂪 position [c+x] 󰁡 update [del] 󰆴 delete [󰋖] help"
   
-  set -l TOKEN (commandline --current-token)
+  set TOKEN (commandline --current-token)
   set --prepend FZF_OPTS --prompt=" Package(pacman)> " --query="$TOKEN" --preview $FZF_PREVIEW
   $PACMAN_PKG | fzf $FZF_OPTS
 

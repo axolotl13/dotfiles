@@ -16,7 +16,6 @@ type -q xmllint; and set -x XMLLINT_INDENT "    "
 
 # bat
 if type -q bat
-  set -x BAT_THEME
   set -x BAT_THEME_LIGHT "Catppuccin Latte"
   set -x BAT_THEME_DARK "Catppuccin Macchiato"
   ## man

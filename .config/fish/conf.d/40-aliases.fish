@@ -6,7 +6,10 @@ type -q zoxide; and alias cd="z"
 type -q nvim; and alias vim="nvim --noplugin"
 type -q podman; and alias docker="podman"
 type -q rsync; and alias cpr="rsync -avh --progress"
-type -q git; and test -e $HOME/.dotfiles; and alias dot='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
+
+type -q git;
+and test -e $HOME/.dotfiles;
+and alias dot='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 
 if type -q kitty; or test -e $HOME/.local/share/kitty-ssh-kitten
   alias kxd="kitten diff"
@@ -38,4 +41,4 @@ if type -q pacman
   end
 end
 
-type -q paru; and alias pxc="paru -Scc"
+type -q yay; and alias pxc="yay -Scc"

@@ -3,7 +3,6 @@ if type -q zoxide
   set -gx _ZO_ECHO "0"
   set -gx _ZO_MAXAGE "5000"
   set -gx _ZO_EXCLUDE_DIRS $HOME $HOME/.cache/*
-  # set -gx -a --path _ZO_EXCLUDE_DIRS $HOME $HOME/.cache /tmp /var/tmp
   zoxide init fish | source
 end
 
@@ -11,14 +10,19 @@ end
 type -q kubectl; and kubectl completion fish | source
 
 # fzf
+type -q fzf; or return 1
 if status --is-interactive
   set -q NVIM; and return 1
   test "$TERM" = "linux"; and return 1
-  type -q fzf; or return 1
 
-  # fzf --fish | source
   # NOTE: Disable default keybinds
+  # fzf --fish | source
   fzf --fish | FZF_CTRL_T_COMMAND= FZF_CTRL_R_COMMAND= FZF_ALT_C_COMMAND= source
+
+  # NOTE: Compatibility for fzf v0.67+
+  set -l FZF_VERSION (fzf --version | cut -d. -f2)
+  set -x FZF_MENU "--header"
+  test $FZF_VERSION -ge 67; and set -x FZF_MENU "--footer"
 
   set -x FZF_THEME_LIGHT "\
   --color=bg+:#CCD0DA,bg:#EFF1F5,spinner:#DC8A78,hl:#D20F39 \
