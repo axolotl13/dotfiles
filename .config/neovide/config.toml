@@ -1,0 +1,6 @@
+frame = "none"
+maximized = false
+no-multigrid = false
+title-hidden = true
+vsync = false
+# idle = false
