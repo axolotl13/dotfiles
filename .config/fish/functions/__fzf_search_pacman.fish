@@ -8,8 +8,8 @@ function __fzf_search_pacman -d 'Search pacman packages'
 
   set FZF_PREVIEW "pacman -Si {1}"
 
-  type -q yay;
-  and set FZF_PREVIEW "yay -Si {1}"
+  type -q paru;
+  and set FZF_PREVIEW "paru -Si {1}"
 
   set FZF_OPTS \
     --style minimal \
@@ -30,7 +30,7 @@ function __fzf_search_pacman -d 'Search pacman packages'
 󰇚 ctrl+t      download package
  ctrl+/      installed package
 󰁡 ctrl+x      update system
- ctrl+p      yay package / pacman package
+ ctrl+p      paru package / pacman package
  ctrl+e      information package
 󱂩 ctrl+d      page-down
 󱔓 ctrl+u      page-up
@@ -45,8 +45,8 @@ function __fzf_search_pacman -d 'Search pacman packages'
     --bind "ctrl-/:transform:[[ ! \$FZF_PROMPT =~ \"installed\" ]] &&
       echo \"change-prompt( Package(installed)> )+reload(pacman -Qsq)\" ||
       echo \"change-prompt( Package(pacman)> )+reload($PACMAN_PKG)\" " \
-    --bind "ctrl-p:transform:[[ ! \$FZF_PROMPT =~ \"yay\" ]] &&
-      echo \"change-prompt( Package(yay)> )+reload(yay -Slq)\" ||
+    --bind "ctrl-p:transform:[[ ! \$FZF_PROMPT =~ \"paru\" ]] &&
+      echo \"change-prompt( Package(paru)> )+reload(paru -Slq)\" ||
       echo \"change-prompt( Package(pacman)> )+reload($PACMAN_PKG)\" " \
     --footer "[󰌑] install [c+q] 󱂪 position [c+x] 󰁡 update [del] 󰆴 delete [󰋖] help"
   

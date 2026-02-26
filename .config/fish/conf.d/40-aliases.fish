@@ -1,4 +1,6 @@
-alias ip="ip -color=auto"
+alias ip="ip --color=auto"
+alias diff="diff --color=auto"
+alias grep="grep --color=auto"
 
 type -q curl; and alias ipp="curl https://ipinfo.io/ip"
 type -q bat; and alias cat="bat -pp"
@@ -41,4 +43,4 @@ if type -q pacman
   end
 end
 
-type -q yay; and alias pxc="yay -Scc"
+type -q paru; and alias pxc="paru -Scc"
