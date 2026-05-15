@@ -1,27 +1,25 @@
-# NOTE: Search the current directory using fzf
+# =============================================================================
+# __fzf_search_directory — fuzzy search the current directory
+# =============================================================================
 function __fzf_search_directory --description "Search the current directory"
-    type -q find
+    not type -q find
+    and return
 
-    or return 1
-
-    set FIND_CMD find * -type d
-    set FIND_CMD_ROOT find / -type d
-    set FZF_PREVIEW "ls -la --color=always {}"
+    set -l FIND_CMD find * -type d
+    set -l FIND_CMD_ROOT find / -type d
+    set -l FZF_PREVIEW "ls -la --color=always {}"
 
     type -q fd
-
-    and set FIND_CMD fd --hidden --type d --color=always
-    and set FIND_CMD_ROOT $FIND_CMD . /
+    and set -l FIND_CMD fd --hidden --type d --color=always
+    and set -l FIND_CMD_ROOT $FIND_CMD . /
 
     type -q eza
-
-    and set FZF_PREVIEW "eza --tree --level=2 --icons --color=always {}"
+    and set -l FZF_PREVIEW "eza --tree --level=2 --icons --color=always {}"
 
     type -q xclip
+    and set -l CLIP "xclip -sel clip"
 
-    and set CLIP "xclip -sel clip"
-
-    set FZF_OPTS \
+    set -l FZF_OPTS \
         --style minimal \
         --height 50% \
         --layout reverse \
@@ -57,9 +55,9 @@ function __fzf_search_directory --description "Search the current directory"
      '" \
         $FZF_MENU "[󰌑] |  c+q position |  c-o open |  c-h no-ignore |  delete | 󰋖 help"
 
-    set TOKEN (commandline --current-token)
+    set -l TOKEN (commandline --current-token)
     set --prepend FZF_OPTS --prompt=" Directory(.)> " --query="$TOKEN" --preview $FZF_PREVIEW
-    set RESULT ($FIND_CMD 2>/dev/null | fzf $FZF_OPTS)
+    set -l RESULT ($FIND_CMD 2>/dev/null | fzf $FZF_OPTS)
 
     test $status -eq 0; and builtin cd $RESULT
 

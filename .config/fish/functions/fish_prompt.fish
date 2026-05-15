@@ -1,3 +1,6 @@
+# =============================================================================
+# PROMPT CONFIGURATION
+# =============================================================================
 function fish_prompt
     set -l __last_command_exit_status $status
 
@@ -26,6 +29,7 @@ function fish_prompt
         set arrow "$root_color# "
     end
 
+    # Git prompt settings
     set -q __fish_git_prompt_showdirtystate
     or set -g __fish_git_prompt_showdirtystate 1
     set -q __fish_git_prompt_color_stagedstate
@@ -43,6 +47,7 @@ function fish_prompt
 
     set -l gitter $(fish_git_prompt $blue'  git:%s')
 
+    # Disable virtualenv's
     set -q VIRTUAL_ENV_DISABLE_PROMPT; or set -g VIRTUAL_ENV_DISABLE_PROMPT true
     set -q VIRTUAL_ENV; and set -l venv $yellow'  '(path basename $VIRTUAL_ENV)
     # set -l color_host (set_color $fish_color_host)

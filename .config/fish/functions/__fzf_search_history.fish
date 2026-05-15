@@ -1,15 +1,17 @@
-# NOTE: Search command history with fzf
+# =============================================================================
+# __fzf_search_history — fuzzy search command history
+# =============================================================================
 function __fzf_search_history --description "Search command history"
-    set FZF_HISTORY_TIME_FORMAT "%m-%d %H:%M:%S"
-    set TIME_PREFIX_REGEX '^.*? │ '
+    set -l FZF_HISTORY_TIME_FORMAT "%m-%d %H:%M:%S"
+    set -l TIME_PREFIX_REGEX '^.*? │ '
 
-    set HISTORY history --null --show-time="$FZF_HISTORY_TIME_FORMAT │ "
-    set FZF_PREVIEW "string replace --regex '$TIME_PREFIX_REGEX' '' -- {} | fish_indent --ansi"
+    set -l HISTORY history --null --show-time="$FZF_HISTORY_TIME_FORMAT │ "
+    set -l FZF_PREVIEW "string replace --regex '$TIME_PREFIX_REGEX' '' -- {} | fish_indent --ansi"
 
-    type -q xclip; and set CLIP "xclip -sel clip"
+    type -q xclip; and set -l CLIP "xclip -sel clip"
 
     # -e +m --tiebreak=index --sort \
-    set FZF_OPTS \
+    set -l FZF_OPTS \
         --style minimal \
         --height 50% \
         --layout reverse \
@@ -23,9 +25,9 @@ function __fzf_search_history --description "Search command history"
         --bind "ctrl-y:execute(printf {} | $CLIP)+bell+abort" \
         $FZF_MENU "󰌑 |  c+y copy"
 
-    set TOKEN (commandline --current-token)
+    set -l TOKEN (commandline --current-token)
     set --prepend FZF_OPTS --prompt=" History> " --query="$TOKEN"
-    set RESULT (builtin $HISTORY | fzf $FZF_OPTS | string split0 | string replace --regex $TIME_PREFIX_REGEX '')
+    set -l RESULT (builtin $HISTORY | fzf $FZF_OPTS | string split0 | string replace --regex $TIME_PREFIX_REGEX '')
 
     test $status -eq 0; and commandline --replace -- $RESULT
 

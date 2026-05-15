@@ -1,23 +1,20 @@
-# NOTE: Search pacman packages with fzf. It supports both pacman and paru,
-# and it can show installed packages and AUR packages.
+# =============================================================================
+# __fzf_search_pacman — fuzzy search pacman packages
+# =============================================================================
 function __fzf_search_pacman -d 'Search pacman packages'
-    type -q pacman
+    not type -q pacman
+    or not type -q sudo
+    or not type -q kitty
+    and return
 
-    and type -q sudo
+    set -l PACMAN_PKG pacman -Slq
 
-    and type -q kitty
-
-    or return 1
-
-    set PACMAN_PKG pacman -Slq
-
-    set FZF_PREVIEW "pacman -Si {1}"
+    set -l FZF_PREVIEW "pacman -Si {1}"
 
     type -q paru
+    and set -l FZF_PREVIEW "paru -Si {1}"
 
-    and set FZF_PREVIEW "paru -Si {1}"
-
-    set FZF_OPTS \
+    set -l FZF_OPTS \
         --style minimal \
         --height 50% \
         --layout reverse \
@@ -56,7 +53,7 @@ function __fzf_search_pacman -d 'Search pacman packages'
       echo \"change-prompt( Package(pacman)> )+reload($PACMAN_PKG)\" " \
         --footer "󰌑 install 󰇚 |  c+q position | 󰁡 c+x update |  delete | 󰋖 help"
 
-    set TOKEN (commandline --current-token)
+    set -l TOKEN (commandline --current-token)
     set --prepend FZF_OPTS --prompt=" Package(pacman)> " --query="$TOKEN" --preview $FZF_PREVIEW
     $PACMAN_PKG | fzf $FZF_OPTS
 

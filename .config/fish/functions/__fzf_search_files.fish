@@ -1,23 +1,21 @@
-# NOTE: Search the current file using fzf
+# =============================================================================
+# __fzf_search_files — fuzzy search the current file
+# =============================================================================
 function __fzf_search_files --description "Search the current file"
-    type -q find
+    not type -q find
+    or not type -q cat
+    and return
 
-    and type -q cat
-
-    or return 1
-
-    set FIND_CMD find * -type f
-    set FZF_PREVIEW "cat {}"
+    set -l FIND_CMD find * -type f
+    set -l FZF_PREVIEW "cat {}"
 
     type -q fd
-
-    and set FIND_CMD fd --hidden --type f --strip-cwd-prefix --follow --color=always
+    and set -l FIND_CMD fd --hidden --type f --strip-cwd-prefix --follow --color=always
 
     type -q bat
+    and set -l FZF_PREVIEW "bat --color=always --style=numbers {}"
 
-    and set FZF_PREVIEW "bat --color=always --style=numbers {}"
-
-    set FZF_OPTS \
+    set -l FZF_OPTS \
         --style minimal \
         --height 50% \
         --layout reverse \
@@ -36,9 +34,9 @@ function __fzf_search_files --description "Search the current file"
       echo \"change-prompt( Files> )+reload($FIND_CMD)\" " \
         $FZF_MENU "󰌑 edit  |  c-q position |  c-o open-file |  c-h no-ignore | 󰑓 c-r reload"
 
-    set TOKEN (commandline --current-token)
+    set -l TOKEN (commandline --current-token)
     set --prepend FZF_OPTS --prompt=" Files> " --query="$TOKEN" --preview $FZF_PREVIEW
-    set RESULT ($FIND_CMD 2>/dev/null | fzf $FZF_OPTS)
+    set -l RESULT ($FIND_CMD 2>/dev/null | fzf $FZF_OPTS)
 
     test $status -eq 0; and $EDITOR $RESULT
 

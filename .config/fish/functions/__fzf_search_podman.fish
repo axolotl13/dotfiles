@@ -1,14 +1,14 @@
-# NOTE: Search podman containers with fzf. It can show all containers and their logs,
-# and it supports starting, stopping, and executing commands in containers.
+# =============================================================================
+# __fzf_search_podman — fuzzy search podman containers
+# =============================================================================
 function __fzf_search_podman -d "Search podman"
-    type -q podman
+    not type -q podman
+    and return
 
-    or return 1
+    set -l PODMAN_CMD podman
+    set -l FZF_PREVIEW "podman logs -f --tail=100 {1}"
 
-    set PODMAN_CMD podman
-    set FZF_PREVIEW "podman logs -f --tail=100 {1}"
-
-    set FZF_OPTS \
+    set -l FZF_OPTS \
         --style minimal \
         --height 60% \
         --layout reverse \
@@ -25,7 +25,7 @@ function __fzf_search_podman -d "Search podman"
         --header-lines=1 \
         --footer "󰌑 start-pod  |  c+q position | 󰓛 c+d stop-pod |  c+t exec-pod |  delete-pod"
 
-    set TOKEN (commandline --current-token)
+    set -l TOKEN (commandline --current-token)
     set --prepend FZF_OPTS --prompt=" Podman> " --query="$TOKEN" --preview $FZF_PREVIEW
     $PODMAN_CMD ps -a | fzf $FZF_OPTS | awk '{print $1}'
 

@@ -1,17 +1,17 @@
-# NOTE: Search the current directory with ripgrep and fzf
+# =============================================================================
+# __fzf_search_grep — fuzzy search with ripgrep
+# =============================================================================
 function __fzf_search_grep --description "Search with ripgrep"
-    type -q rg
+    not type -q rg
+    or not type -q bat
+    and return
 
-    and type -q bat
+    set -l TEMP (mktemp -u)
 
-    or return 1
+    set -l RG_PREFIX rg --column --line-number --no-heading --color=always --smart-case --hidden
+    set -l FZF_PREVIEW "bat --color=always {1} --highlight-line {2}"
 
-    set TEMP (mktemp -u)
-
-    set RG_PREFIX rg --column --line-number --no-heading --color=always --smart-case --hidden
-    set FZF_PREVIEW "bat --color=always {1} --highlight-line {2}"
-
-    set FZF_OPTS \
+    set -l FZF_OPTS \
         --style minimal \
         --height 60% \
         --layout reverse \
@@ -40,7 +40,7 @@ function __fzf_search_grep --description "Search with ripgrep"
         --bind "ctrl-q:change-preview-window(down,border-top|up,border-bottom)" \
         $FZF_MENU "󰌑 edit  |  c-q position | 󱊷 exit"
 
-    set TOKEN (commandline --current-token)
+    set -l TOKEN (commandline --current-token)
     set --prepend FZF_OPTS --prompt=" Grep> " --query="$TOKEN" --preview $FZF_PREVIEW
 
     fzf $FZF_OPTS 2>/dev/null
