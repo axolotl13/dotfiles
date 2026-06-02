@@ -13,6 +13,7 @@ function __fzf_search_podman -d "Search podman"
         --height 60% \
         --layout reverse \
         --multi \
+        --ghost "nginx" \
         --preview-window=cycle,follow,65%:down \
         --bind "ctrl-q:change-preview-window(up|hidden)" \
         --bind "ctrl-d:preview-down" \

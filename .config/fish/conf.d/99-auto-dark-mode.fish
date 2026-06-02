@@ -21,7 +21,7 @@ if status is-interactive
 
         if string match -q "*dark*" "$mode"
              # --- Dark mode ---
-            fish_config theme choose mocha
+            fish_config theme choose catppuccin-mocha --color-theme=dark
             # Apply fzf dark theme only if the variable is defined
             set -q FZF_THEME_DARK
             and set -gx FZF_DEFAULT_OPTS $FZF_THEME_DARK
@@ -30,7 +30,7 @@ if status is-interactive
             and set -gx BAT_THEME $BAT_THEME_DARK
         else
             # --- Light mode ---
-            fish_config theme choose latte
+            fish_config theme choose catppuccin-mocha --color-theme=light
             # Apply fzf light theme only if the variable is defined
             set -q FZF_THEME_LIGHT
             and set -gx FZF_DEFAULT_OPTS $FZF_THEME_LIGHT

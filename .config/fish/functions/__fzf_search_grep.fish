@@ -17,6 +17,7 @@ function __fzf_search_grep --description "Search with ripgrep"
         --layout reverse \
         --ansi \
         --disabled \
+        --ghost "for x in ..." \
         --marker "▏" \
         --pointer "█" \
         --color "hl:-1:underline,hl+:-1:underline:reverse" \

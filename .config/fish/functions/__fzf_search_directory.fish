@@ -19,12 +19,15 @@ function __fzf_search_directory --description "Search the current directory"
     type -q xclip
     and set -l CLIP "xclip -sel clip"
 
+    set -l cwd (string join '/' (string split '/' $PWD | tail -2))
+
     set -l FZF_OPTS \
         --style minimal \
         --height 50% \
         --layout reverse \
         --multi \
         --ansi \
+        --ghost $cwd \
         --marker "▏" \
         --pointer "█" \
         --with-shell "bash -c" \

@@ -17,6 +17,7 @@ function __fzf_search_history --description "Search command history"
         --layout reverse \
         --print0 \
         --read0 \
+        --ghost "ls -la" \
         --scheme history \
         --bind "ctrl-d:preview-down" \
         --bind "ctrl-u:preview-up" \

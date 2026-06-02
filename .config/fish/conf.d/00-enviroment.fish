@@ -26,17 +26,17 @@ end
 # manpager
 # BUG: nvim resession plugin conflicts with MANPAGER; kept disabled
 # ------------------------------------------------------------------------------
-# if test "$EDITOR" = "nvim"
-#     set -gx MANPAGER "nvim +Man!"
-# else
-#     set -gx MANPAGER "less --use-color -Dd+r -Du+b"
-# end
+if test "$EDITOR" = "nvim"
+    set -gx MANPAGER "nvim +Man!"
+else
+    set -gx MANPAGER "less --use-color -Dd+r -Du+b"
+end
 
 # ------------------------------------------------------------------------------
 # less
 # ------------------------------------------------------------------------------
 set -gx LESS "--RAW-CONTROL-CHARS --use-color -Dd+r -Du+b"
-set -gx MANPAGER "less --use-color -Dd+r -Du+b"
+# set -gx MANPAGER "less --use-color -Dd+r -Du+b"
 
 # ------------------------------------------------------------------------------
 # xmllint

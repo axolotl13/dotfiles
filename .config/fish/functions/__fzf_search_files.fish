@@ -21,6 +21,7 @@ function __fzf_search_files --description "Search the current file"
         --layout reverse \
         --multi \
         --ansi \
+        --ghost "script.sh" \
         --marker "▏" \
         --pointer "█" \
         --with-shell "bash -c" \
@@ -32,7 +33,7 @@ function __fzf_search_files --description "Search the current file"
         --bind "ctrl-h:transform:[[ ! \$FZF_PROMPT =~ \"ignore\" ]] &&
       echo \"change-prompt( Files(ignore)> )+reload($FIND_CMD --no-ignore)\" ||
       echo \"change-prompt( Files> )+reload($FIND_CMD)\" " \
-        $FZF_MENU "󰌑 edit  |  c-q position |  c-o open-file |  c-h no-ignore | 󰑓 c-r reload"
+        $FZF_MENU "󰌑 edit  |  c-q position |  c-o open-file |  c-h no-ignore | 󰑓 c-r reload"
 
     set -l TOKEN (commandline --current-token)
     set --prepend FZF_OPTS --prompt=" Files> " --query="$TOKEN" --preview $FZF_PREVIEW
